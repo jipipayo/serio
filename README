@@ -1,0 +1,13 @@
+
+This is a litle experiment to try to do a php wrapper to use MySql with huge database tables (logs, etc),
+and search into it, not using any external software like: memcached, mongoDb, etc.
+
+
+The trick is to create a table MyIsam, with a fulltext search index (OMG!) and a uuid with primary key index.
+
+Benchmarks said we found needle in haystack in 0.003~0.004 secs against 1 Million records.
+
+
+So... MyIsam is not bad at all! ;-D
+
+
