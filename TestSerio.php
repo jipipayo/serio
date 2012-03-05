@@ -25,13 +25,13 @@ $data[2] = 'Dos';
 
 //insert 1 million rows and count secs
 for ($i = 1; $i <= 1000000; $i++) {
-    $serio->WriteRow('serio1', $data);
+    $serio->writeRow('serio1', $data);
 }*/
 
 
 
 //search test
-$serio->SearchRows('serio1','Chachi');
+$serio->searchRows('serio1','Chachi');
 
 
 
