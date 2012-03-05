@@ -1,6 +1,4 @@
 <?php
-
-
 include_once 'Serio.php';
 
 
@@ -14,22 +12,32 @@ function microtime_float()
 
 // Get starting time.
 $start = microtime_float();
-
 /////////////////////////////////////////////////////////////
 
 $serio = new Serio();
-$data[0] = 'Cero';
+
+
+//insert test
+
+/*$data[0] = 'Cero';
 $data[1] = 'Uno';
 $data[2] = 'Dos';
 
 //insert 1 million rows and count secs
-for ($i = 1; $i <= 100000; $i++) {
+for ($i = 1; $i <= 1000000; $i++) {
     $serio->WriteRow('serio1', $data);
-}
+}*/
+
+
+
+//search test
+$serio->SearchRows('serio1','Chachi');
+
+
+
+
+
 
 ////////////////////////////////////////////////////////////////
-
 $end = microtime_float();
-
-// Print results.
 echo 'Script Execution Time: ' . round($end - $start, 3) . ' seconds';
