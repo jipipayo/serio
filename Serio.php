@@ -12,6 +12,7 @@ class Serio
         $this->_connectDB();
     }
 
+
     private function _connectDB()
     {
         include_once 'SerioConf.php';
@@ -23,15 +24,17 @@ class Serio
     }
 
 
+
     private function _cloneTableInMemory($table)
     {
-
+        //not used
         $query = "CREATE TABLE t_copy LIKE $table;
         ALTER TABLE t_copy engine=memory;
         INSERT INTO t_copy SELECT * FROM $table;";
 
         mysqli_query($this->link, $query);
     }
+
 
 
     public function writeRow($table, $data)
@@ -43,13 +46,13 @@ class Serio
 
     }
 
+
     public function searchRows($table, $data)
     {
         //$this->_cloneDbMemory($table);
 
-        $query = "SELECT SQL_NO_CACHE uuid,data_pack FROM `$table` WHERE data_pack LIKE '%" . mysql_real_escape_string($data) . "%' ";
-        //$query = "SELECT SQL_NO_CACHE uuid,data_pack FROM `$table` WHERE FIND_IN_SET('$data',data_pack ";
-        //$query = "SELECT * FROM `$table` WHERE data_pack LIKE '%$data%' ";
+        $query = "SELECT SQL_NO_CACHE * FROM `$table` WHERE
+         MATCH data_pack AGAINST ('" . mysql_real_escape_string($data) . "' IN BOOLEAN MODE)";
 
         if ($this->result = mysqli_query($this->link, $query)) {
             /* fetch object array */
@@ -57,19 +60,21 @@ class Serio
                 printf("%s (%s)\n", $row[0], $row[1]);
             }
         }
-
     }
+
 
     public function __destruct()
     {
         if (!$this->result) {
             printf("Serio says: %s\n", mysqli_error($this->link));
-
         }
 
         if ($this->link) {
-            mysqli_free_result($this->result);
             mysqli_close($this->link);
+        }
+
+        if($this->result){
+            mysqli_free_result($this->result);
         }
 
     }

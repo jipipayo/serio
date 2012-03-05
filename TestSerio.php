@@ -1,7 +1,6 @@
 <?php
 include_once 'Serio.php';
 
-
 // Function to calculate script execution time.
 function microtime_float()
 {
@@ -23,7 +22,7 @@ $serio = new Serio();
 $data[1] = 'Uno';
 $data[2] = 'Dos';
 
-//insert 1 million rows and count secs
+//insert 1 million rows
 for ($i = 1; $i <= 1000000; $i++) {
     $serio->writeRow('serio1', $data);
 }*/
@@ -31,9 +30,11 @@ for ($i = 1; $i <= 1000000; $i++) {
 
 
 //search test
-$serio->searchRows('serio1','Chachi');
+//$serio->searchRows('serio1','Chachi');
+$serio->searchRows('serio1','Lolo');
 
-
+/*Note: with a fulltext index on datapack (serialized), we get Time: 0.003-0.004 avg seconds
+    on a search up to 1 million of records */
 
 
 
