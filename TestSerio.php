@@ -8,17 +8,18 @@ function microtime_float()
     $microtime = (float)$msec + (float)$sec;
     return $microtime;
 }
-
 // Get starting time.
 $start = microtime_float();
 /////////////////////////////////////////////////////////////
 
-$serio = new Serio();
 
 
-//insert test
 
-/*$data[0] = 'Cero';
+
+//*********insert test
+
+/*$serio = new Serio();
+$data[0] = 'Cero';
 $data[1] = 'Uno';
 $data[2] = 'Dos';
 
@@ -29,12 +30,17 @@ for ($i = 1; $i <= 1000000; $i++) {
 
 
 
-//search test
-//$serio->searchRows('serio1','Chachi');
-$serio->searchRows('serio1','Lolo');
+//*********search test
+$serio = new Serio();
+var_dump($serio->searchRows('serio1','Chufa'));
 
-/*Note: with a fulltext index on datapack (serialized), we get Time: 0.003-0.004 avg seconds
+/*Note: with a fulltext index on datapack (serialized), we get Time: 0.003~0.004 avg seconds
     on a search up to 1 million of records */
+
+
+
+
+
 
 
 

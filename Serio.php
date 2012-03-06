@@ -22,6 +22,7 @@ class Serio
     }
 
 
+
     private function _connectDB()
     {
         include_once 'SerioConf.php';
@@ -31,6 +32,7 @@ class Serio
             printf("Serio says: Connect failed - %s\n", mysqli_connect_error());
         }
     }
+
 
 
     public function writeRow($table, $data)
@@ -43,10 +45,9 @@ class Serio
     }
 
 
+
     public function searchRows($table, $data)
     {
-        $result = null;
-
         $query = "SELECT SQL_NO_CACHE * FROM `$table` WHERE
          MATCH data_pack AGAINST ('" . mysql_real_escape_string($data) . "' IN BOOLEAN MODE)";
 
@@ -58,12 +59,11 @@ class Serio
                 $rows[$i][1] = $row[1];
                 $i++;
             }
-            $result = $rows;
         }
 
-        //var_dump($result);
-        return $result;
+        return $rows; //Array
     }
+
 
 
     public function __destruct()
@@ -79,8 +79,6 @@ class Serio
         if ($this->result) {
             mysqli_free_result($this->result);
         }
-
-
     }
 
 }
