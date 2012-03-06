@@ -1,4 +1,13 @@
 <?php
+/*
+ * ----------------------------------------------------------------------------
+ * "THE BEER-WARE LICENSE":
+ * <daniel.remeseiro@gmail.com> wrote this file. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy me a beer in return.
+ * ----------------------------------------------------------------------------
+ */
+
 
 class Serio
 {
@@ -24,19 +33,6 @@ class Serio
     }
 
 
-
-    private function _cloneTableInMemory($table)
-    {
-        //not used
-        $query = "CREATE TABLE t_copy LIKE $table;
-        ALTER TABLE t_copy engine=memory;
-        INSERT INTO t_copy SELECT * FROM $table;";
-
-        mysqli_query($this->link, $query);
-    }
-
-
-
     public function writeRow($table, $data)
     {
         $data = serialize($data);
@@ -49,17 +45,24 @@ class Serio
 
     public function searchRows($table, $data)
     {
-        //$this->_cloneDbMemory($table);
+        $result = null;
 
         $query = "SELECT SQL_NO_CACHE * FROM `$table` WHERE
          MATCH data_pack AGAINST ('" . mysql_real_escape_string($data) . "' IN BOOLEAN MODE)";
 
         if ($this->result = mysqli_query($this->link, $query)) {
-            /* fetch object array */
+            $i = 0;
             while ($row = $this->result->fetch_row()) {
-                printf("%s (%s)\n", $row[0], $row[1]);
+                $row[1] = unserialize($row[1]);
+                $rows[$i][0] = $row[0];
+                $rows[$i][1] = $row[1];
+                $i++;
             }
+            $result = $rows;
         }
+
+        //var_dump($result);
+        return $result;
     }
 
 
@@ -73,9 +76,10 @@ class Serio
             mysqli_close($this->link);
         }
 
-        if($this->result){
+        if ($this->result) {
             mysqli_free_result($this->result);
         }
+
 
     }
 

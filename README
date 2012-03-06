@@ -4,6 +4,9 @@ and search into it, not using any external software like: memcached, mongoDb, et
 
 
 The trick is to create a table MyIsam, with a fulltext search index (OMG!) and a uuid with primary key index.
+We use this table as key:value table, but in addition we created a fulltext index to datapack row values (serialized)
+
+Interesting ... fulltext MyIsam capability can find text into serialized fields.
 
 Benchmarks said we found needle in haystack in 0.003~0.004 secs against 1 Million records.
 
